@@ -1,0 +1,55 @@
+{% extends "baselayout.html" %}
+
+{% block main %}
+
+
+<h1>{{details[2]}} at {{details[1]}}</h1>
+
+<h2>Auditorium</h2> <br>
+<p>{{details[3]}}</p>
+
+<h2>Auditorium Capacity</h2> <br>
+<p>{{details[4]}}</p>
+
+<h2>Movie Description</h2> <br>
+{{details[5]}}
+
+<h2>Price</h2> <br>
+{{details[6]}}
+
+<div class="table">
+{{ df.to_html(border=0, classes="table")|safe }}
+</div>
+    
+<h2>Place New Order</h2> <br>
+
+{% if condition == "good" %}
+
+<p class="red"> The email address provided is not registered.</p> 
+
+{% endif %}
+
+<form method="POST" action="">
+{% for field in [form.email, form.order_size] %}
+<div class="form-group{% if field.errors %} has-error{% endif %}">
+<label class="control-label">{{ field.label }}</label>
+{{ field(class="form-control") }}
+{% if field.errors %}
+<div class="help-block">
+{% for error in field.errors %}
+<p>{{ error }}</p>
+{% endfor %}
+</div>
+{% endif %}
+</div>
+{% endfor %}
+    
+<div class="form-group">
+{{ form.csrf_token }}
+<a class="btn btn-default" href="/">Return</a>
+<button type="submit" class="btn btn-primary">Place Order</button>
+</div>
+</form>
+
+
+{% endblock %}
